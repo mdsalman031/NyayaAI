@@ -1,245 +1,187 @@
-# ⚖️ NyayaAI — Agentic AI for Indian Case Law Intelligence
+# NyayaAI
 
-> **Hackathon Prototype** | Multi-Agent AI System for Structured Indian Legal Intelligence
+NyayaAI is a full-stack legal intelligence project that converts long Indian court judgments (PDF/TXT) into structured case output.
 
----
+It includes:
+- FastAPI backend with a multi-step extraction pipeline
+- React (Vite) frontend for upload, review, search, and analytics
+- SQLite storage with full-text search
+- Natural-language case querying
+- Evidence and confidence mapping against source text
 
-## 🏗️ System Architecture
+## What it does
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                      USER / RESEARCHER                          │
-└──────────────────────────┬──────────────────────────────────────┘
-                           │  Upload PDF / Natural Language Query
-                           ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                    REACT FRONTEND (Vite)                         │
-│  ┌──────────┐  ┌───────────┐  ┌──────────┐  ┌──────────────┐  │
-│  │  Upload  │  │ Pipeline  │  │ Results  │  │  Analytics   │  │
-│  │  Screen  │  │  Viewer   │  │  Viewer  │  │  Dashboard   │  │
-│  └──────────┘  └───────────┘  └──────────┘  └──────────────┘  │
-└──────────────────────────┬──────────────────────────────────────┘
-                           │  REST API + WebSocket
-                           ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                   FASTAPI BACKEND (Python)                       │
-│  POST /upload  GET /status/{id}  POST /search  POST /query      │
-│  GET /cases    GET /analytics    GET /cases/{id}                 │
-└──────────────────────────┬──────────────────────────────────────┘
-                           │
-          ┌────────────────┴────────────────┐
-          ▼                                 ▼
-┌─────────────────────┐         ┌──────────────────────────────┐
-│   MASTER AGENT      │         │         VECTOR STORE          │
-│   Orchestrator      │         │   FAISS (semantic search)     │
-│                     │         │   + sentence-transformers     │
-│  ┌──────────────┐   │         └──────────────────────────────┘
-│  │ Document     │   │
-│  │ Ingestion    │   │         ┌──────────────────────────────┐
-│  ├──────────────┤   │         │        SQLite DATABASE        │
-│  │ Issue ID     │   │         │  cases table + FTS5 index     │
-│  ├──────────────┤   │         └──────────────────────────────┘
-│  │ Petitioner   │   │
-│  ├──────────────┤   │
-│  │ Respondent   │   │              LLM (OpenAI / Groq)
-│  ├──────────────┤   │◄────────────────────────────────────
-│  │ Law Sections │   │         gpt-4o-mini / llama-3-70b
-│  ├──────────────┤   │
-│  │ Precedents   │   │
-│  ├──────────────┤   │
-│  │ Reasoning    │   │
-│  ├──────────────┤   │
-│  │ Judgment     │   │
-│  ├──────────────┤   │
-│  │ Metadata     │   │
-│  └──────────────┘   │
-└─────────────────────┘
+For each uploaded judgment, NyayaAI extracts:
+- Core legal issue
+- Petitioner arguments
+- Respondent arguments
+- Law sections applied
+- Precedents cited
+- Court reasoning
+- Final judgment
+- Metadata (title, court, year, judge, category, case number)
+- Source validation (coverage + evidence snippets)
+
+## Tech Stack
+
+- Backend: Python, FastAPI, Uvicorn
+- Frontend: React 18, Vite
+- Database: SQLite + FTS5
+- LLM access: OpenAI-compatible client (works with Groq key)
+
+## Project Structure
+
+```text
+NyayaAI/
+  agents/                # extraction agents + orchestrator
+  utils/                 # database + vector store helper
+  frontend/              # React app
+    src/
+  main.py                # FastAPI entrypoint
+  requirements.txt
+  .env.example
+  demo_dataset.json
+  RUNNING.md
 ```
 
----
+## Prerequisites
 
-## 🤖 Multi-Agent Pipeline
+- Python 3.11+ (3.13 also works with current requirements constraints)
+- Node.js 18+
+- npm
 
-| # | Agent | Role | Output |
-|---|-------|------|--------|
-| 1 | **Document Ingestion** | PDF/TXT text extraction | Raw text |
-| 2 | **Issue Identification** | Core legal question | String |
-| 3 | **Petitioner Agent** | Petitioner's arguments | `string[]` |
-| 4 | **Respondent Agent** | Respondent's arguments | `string[]` |
-| 5 | **Law Section Agent** | Statutes & sections cited | `string[]` |
-| 6 | **Precedent Analysis** | Past cases cited | `{case_name, citation, relevance}[]` |
-| 7 | **Court Reasoning** | Judge's logic summarized | String |
-| 8 | **Final Judgment** | Verdict extracted | String |
-| 9 | **Metadata Agent** | Title, court, year, judge | Object |
-| 10 | **Master Agent** | Merges all → JSON | Structured JSON |
+## 1) Backend Setup
 
----
+From project root:
 
-## 📁 Folder Structure
+```powershell
+cd NyayaAI
 
-```
-nyayaai/
-├── backend/
-│   ├── main.py                  # FastAPI app, routes
-│   ├── requirements.txt         # Dependencies
-│   ├── demo_dataset.json        # 3 demo cases
-│   ├── agents/
-│   │   ├── __init__.py
-│   │   ├── base_agent.py        # LLM base class
-│   │   ├── master_agent.py      # Orchestrator
-│   │   ├── document_agent.py    # All specialized agents
-│   │   ├── issue_agent.py       # (re-export)
-│   │   ├── petitioner_agent.py  # (re-export)
-│   │   ├── respondent_agent.py  # (re-export)
-│   │   ├── law_section_agent.py # (re-export)
-│   │   ├── precedent_agent.py   # (re-export)
-│   │   ├── reasoning_agent.py   # (re-export)
-│   │   ├── judgment_agent.py    # (re-export)
-│   │   └── metadata_agent.py   # (re-export)
-│   └── utils/
-│       ├── database.py          # SQLite + FTS5
-│       └── vector_store.py      # FAISS semantic search
-└── frontend/
-    └── src/
-        └── App.jsx              # Complete React app (all screens)
-```
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
 
----
-
-## 🚀 Running the Prototype
-
-### 1. Backend Setup
-
-```bash
-cd backend
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate   # Windows: venv\Scripts\activate
-
-# Install dependencies
+pip install --upgrade pip
 pip install -r requirements.txt
+```
 
-# Set API key
-export OPENAI_API_KEY="sk-your-key-here"
-# Or use Groq (free):
-export OPENAI_API_KEY="gsk_your_groq_key"
-export LLM_MODEL="llama-3.1-70b-versatile"
-# Update base_url in base_agent.py for Groq:
-# client = AsyncOpenAI(api_key=..., base_url="https://api.groq.com/openai/v1")
+Create local env file:
 
-# Run server
+```powershell
+Copy-Item .env.example .env
+```
+
+Edit `.env` and set at least:
+
+```env
+OPENAI_API_KEY=your_key_here
+LLM_MODEL=llama-3.1-8b-instant
+```
+
+Notes:
+- If you use a Groq key (`gsk_...`), backend auto-routes to Groq base URL.
+- Never commit `.env`.
+
+Run backend:
+
+```powershell
 uvicorn main:app --reload --port 8000
 ```
 
-### 2. Load Demo Data (without API key)
+Backend URL: `http://127.0.0.1:8000`
 
-```bash
-# Seed the database with demo cases
-python -c "
-import sqlite3, json
-from utils.database import init_db, save_case
-init_db()
-with open('demo_dataset.json') as f:
-    cases = json.load(f)
-for c in cases:
-    save_case(c, c['filename'])
-print('Demo data loaded!')
-"
-```
+## 2) Frontend Setup
 
-### 3. Frontend Setup
+Open a second terminal:
 
-```bash
+```powershell
 cd frontend
-
-# Install
-npm create vite@latest . --template react
 npm install
-
-# Replace src/App.jsx with our App.jsx
-# Add to index.html: <link rel="stylesheet" href="...tailwind...">
-
-npm run dev
-# → http://localhost:5173
+cmd /c npm run dev
 ```
 
-### 4. Quick Demo (no setup needed)
+Frontend URL: `http://localhost:5173`
 
-Open the React component directly in Claude.ai Artifacts — it includes
-all 3 demo cases and the full UI with no backend required.
+Why `cmd /c npm run dev`?
+- On some Windows setups, PowerShell execution policy blocks `npm.ps1`.
 
----
+## 3) How to Use
 
-## 📊 Output JSON Format
+1. Open the frontend.
+2. Go to Upload and submit a `.pdf` or `.txt` judgment.
+3. Wait for processing to complete.
+4. Review results in tabs:
+   - Structured
+   - Evidence (coverage + source snippets)
+   - Full Data
+   - Timeline
+5. Use Cases page for:
+   - keyword search
+   - plain-language queries (for example: `show cases under IPC 420`)
+6. Use Analytics page for section/category/court trends.
+
+## API Endpoints
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `/` | health/info |
+| POST | `/upload` | upload PDF/TXT judgment |
+| GET | `/status/{job_id}` | track processing |
+| GET | `/cases` | list saved cases |
+| GET | `/cases/{case_id}` | get one case |
+| POST | `/search` | keyword + filter search |
+| POST | `/query` | plain-language query |
+| GET | `/analytics` | dashboard aggregates |
+
+## Output Shape (simplified)
 
 ```json
 {
-  "case_title": "Kesavananda Bharati v. State of Kerala",
-  "court": "Supreme Court of India",
-  "year": "1973",
-  "judge": "CJ S.M. Sikri (13-judge bench)",
-  "case_category": "Constitutional",
-  "case_number": "Writ Petition (Civil) 135/1970",
-  "issue": "Whether Parliament has unlimited power to amend...",
-  "petitioner_arguments": ["arg1", "arg2", "..."],
-  "respondent_arguments": ["arg1", "arg2", "..."],
-  "law_sections": ["Article 368 Constitution of India", "..."],
-  "precedents": [
-    {
-      "case_name": "I.C. Golak Nath v. State of Punjab",
-      "citation": "AIR 1967 SC 1643",
-      "relevance": "Parliament cannot amend fundamental rights"
-    }
-  ],
-  "court_reasoning": "The Supreme Court by 7-6 majority...",
-  "final_judgment": "Basic Structure Doctrine established...",
-  "summary": "One-paragraph overview..."
+  "case_title": "...",
+  "court": "...",
+  "year": "...",
+  "judge": "...",
+  "case_category": "...",
+  "case_number": "...",
+  "issue": "...",
+  "petitioner_arguments": [],
+  "respondent_arguments": [],
+  "law_sections": [],
+  "precedents": [],
+  "court_reasoning": "...",
+  "final_judgment": "...",
+  "summary": "...",
+  "source_validation": {
+    "overall_coverage_percent": 0,
+    "field_coverage": {},
+    "evidence": {}
+  }
 }
 ```
 
----
+## Troubleshooting
 
-## 🔍 API Endpoints
+### `pip install -r requirements.txt` fails on PyMuPDF/FAISS
+Current `requirements.txt` already skips problematic native deps on Python 3.13 where needed.
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `POST` | `/upload` | Upload PDF/TXT judgment |
-| `GET` | `/status/{job_id}` | Poll processing status |
-| `GET` | `/cases` | List all processed cases |
-| `GET` | `/cases/{id}` | Get full case detail |
-| `POST` | `/search` | Structured search with filters |
-| `POST` | `/query` | Natural language query |
-| `GET` | `/analytics` | Dashboard metrics |
+### Backend shows LLM auth error
+- Confirm `.env` exists in project root.
+- Confirm `OPENAI_API_KEY` is set correctly.
+- Restart backend after changing `.env`.
 
----
+### Frontend opens but shows blank page
+- Restart frontend dev server.
+- Hard refresh browser: `Ctrl + Shift + R`.
 
-## 🔮 Future Improvements
+### Natural-language query returns no cases
+- Ensure uploaded case has `law_sections` populated.
+- Try direct terms like `IPC 420`, `acquittal`, `conviction`.
 
-1. **Multi-language support** — Tamil, Hindi, Marathi judgments via multilingual LLMs
-2. **Citation Graph** — Visualize how cases cite each other (Neo4j graph database)
-3. **Contradiction Detection** — Flag when two precedents contradict each other
-4. **Judicial Trend Analysis** — Track how specific judges rule over time
-5. **Legal Research Assistant** — Chat with cases using RAG
-6. **Court-specific fine-tuned models** — Fine-tune on Indian legal corpus (InLegalBERT)
-7. **Batch processing** — Process 100s of judgments from Supreme Court website
-8. **API webhooks** — Real-time notifications when new judgments are processed
-9. **Export** — PDF/Word reports with structured case summaries
-10. **Mobile app** — React Native app for lawyers on the go
+## Security Notes
 
----
+- `.env` is ignored by `.gitignore`.
+- Do not paste API keys in code, README, or commits.
+- Rotate key immediately if exposed.
 
-## 🏆 Hackathon Highlights
+## License
 
-- ✅ **10 specialized AI agents** — each with expert-crafted prompts
-- ✅ **Real PDF parsing** — PyMuPDF + pypdf fallback
-- ✅ **Semantic search** — FAISS + sentence-transformers
-- ✅ **Full-text search** — SQLite FTS5 index
-- ✅ **Natural language queries** — "Show acquittal cases under IPC 420"
-- ✅ **Analytics dashboard** — Frequently cited sections, verdict patterns
-- ✅ **Production-ready FastAPI** — Async, background tasks, CORS
-- ✅ **Beautiful React UI** — 4 screens, agent pipeline visualization
-
----
-
-*Built for Deloitte Hackathon · NyayaAI Team*
+Add your preferred license (MIT/Apache-2.0/etc.) before public release.
