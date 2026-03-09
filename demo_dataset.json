@@ -1,0 +1,116 @@
+[
+  {
+    "case_id": "demo-001",
+    "filename": "Kesavananda_Bharati_vs_Kerala.pdf",
+    "case_title": "Kesavananda Bharati v. State of Kerala",
+    "court": "Supreme Court of India",
+    "year": "1973",
+    "judge": "Chief Justice S.M. Sikri (13-judge bench)",
+    "case_category": "Constitutional",
+    "case_number": "Writ Petition (Civil) 135/1970",
+    "issue": "Whether Parliament has unlimited power to amend the Constitution under Article 368, or whether there are implied limitations that prevent amendment of the 'basic structure' of the Constitution.",
+    "petitioner_arguments": [
+      "Fundamental rights guaranteed under Part III of the Constitution are inviolable and cannot be amended by Parliament.",
+      "Article 368 does not grant Parliament unlimited amending power; it only allows procedural amendments.",
+      "The right to property under Article 31 cannot be extinguished through constitutional amendment.",
+      "Democratic republic character of the Constitution forms its basic structure and is unamendable."
+    ],
+    "respondent_arguments": [
+      "Article 368 grants Parliament unlimited constituent power to amend any part of the Constitution.",
+      "The 24th, 25th and 29th Constitutional Amendments are valid exercises of parliamentary power.",
+      "Golak Nath judgment was incorrectly decided and should be overruled.",
+      "Parliament represents the sovereign will of the people and cannot be restricted in its amending power."
+    ],
+    "law_sections": [
+      "Article 13 Constitution of India",
+      "Article 31 Constitution of India",
+      "Article 368 Constitution of India",
+      "Article 19(1)(f) Constitution of India",
+      "24th Constitutional Amendment Act 1971",
+      "25th Constitutional Amendment Act 1971"
+    ],
+    "precedents": [
+      {"case_name": "I.C. Golak Nath v. State of Punjab", "citation": "AIR 1967 SC 1643", "relevance": "Parliament cannot amend fundamental rights"},
+      {"case_name": "Shankari Prasad v. Union of India", "citation": "AIR 1951 SC 458", "relevance": "Parliament can amend any part of Constitution"},
+      {"case_name": "Sajjan Singh v. State of Rajasthan", "citation": "AIR 1965 SC 845", "relevance": "Article 368 covers fundamental rights amendments"}
+    ],
+    "court_reasoning": "The Supreme Court by a 7-6 majority held that while Parliament has wide powers to amend the Constitution, it cannot destroy its 'basic structure' or essential features. The Court identified basic structure as including: supremacy of the Constitution, republican and democratic form of government, secular character, separation of powers, and federal character. The majority reasoned that constituent power under Article 368 is not the same as sovereign power and is limited by the constitutional framework itself.",
+    "final_judgment": "The Supreme Court upheld the 24th Amendment as valid but struck down part of the 25th Amendment. The Court overruled Golak Nath and established the landmark 'Basic Structure Doctrine' — Parliament can amend the Constitution but cannot destroy its basic or essential features.",
+    "summary": "Kesavananda Bharati (1973) is the most significant constitutional law case in Indian legal history. The Supreme Court established the Basic Structure Doctrine, holding that while Parliament may amend the Constitution, it cannot alter its fundamental identity or basic framework. This doctrine continues to protect India's constitutional democracy."
+  },
+  {
+    "case_id": "demo-002",
+    "filename": "Maneka_Gandhi_vs_Union.pdf",
+    "case_title": "Maneka Gandhi v. Union of India",
+    "court": "Supreme Court of India",
+    "year": "1978",
+    "judge": "Justice P.N. Bhagwati",
+    "case_category": "Constitutional / Fundamental Rights",
+    "case_number": "Writ Petition 231/1977",
+    "issue": "Whether impounding of a passport without giving reasons violates the fundamental right to personal liberty under Article 21, and whether 'procedure established by law' must be just, fair and reasonable.",
+    "petitioner_arguments": [
+      "Impounding the passport without giving any reasons violates natural justice principles.",
+      "Article 21's 'procedure established by law' must be just, fair and reasonable, not arbitrary.",
+      "Right to travel abroad is part of personal liberty under Article 21.",
+      "The Passport Act does not provide adequate procedural safeguards."
+    ],
+    "respondent_arguments": [
+      "The government has executive power to impound passports under the Passport Act 1967.",
+      "Article 21 only requires that procedure be 'established by law', not that the law be reasonable.",
+      "State security and public interest justify impounding the passport without reasons.",
+      "AK Gopalan decision supports reading Articles 19, 21 and 22 independently."
+    ],
+    "law_sections": [
+      "Article 21 Constitution of India",
+      "Article 19(1)(a) Constitution of India",
+      "Article 14 Constitution of India",
+      "Passport Act 1967 Section 10(3)(c)",
+      "Article 22 Constitution of India"
+    ],
+    "precedents": [
+      {"case_name": "A.K. Gopalan v. State of Madras", "citation": "AIR 1950 SC 27", "relevance": "Narrow interpretation of Article 21 - overruled"},
+      {"case_name": "R.C. Cooper v. Union of India", "citation": "AIR 1970 SC 564", "relevance": "Fundamental rights must be read together"},
+      {"case_name": "Satwant Singh v. Assistant Passport Officer", "citation": "AIR 1967 SC 1836", "relevance": "Right to travel is part of personal liberty"}
+    ],
+    "court_reasoning": "The Court held that A.K. Gopalan was wrongly decided and that fundamental rights in Part III must be read as a connected whole. 'Procedure established by law' under Article 21 must not be arbitrary, unfair or unreasonable — importing the due process standard. The Court expanded Article 21 to encompass the right to live with dignity, right to livelihood, right to health, and numerous other rights not expressly mentioned.",
+    "final_judgment": "The Supreme Court held that impounding the passport without giving reasons was violative of Articles 14 and 21. The government was directed to furnish reasons. The judgment dramatically expanded the scope of Article 21 and established that any law affecting personal liberty must pass tests of reasonableness, fairness, and justice.",
+    "summary": "Maneka Gandhi (1978) transformed Indian constitutional law by expanding Article 21 far beyond its literal text. Justice Bhagwati held that personal liberty includes the right to travel abroad, and any procedure curtailing liberty must be just, fair and reasonable. This case opened the floodgates for judicial expansion of fundamental rights."
+  },
+  {
+    "case_id": "demo-003",
+    "filename": "State_vs_Sharma_IPC420.pdf",
+    "case_title": "State of Maharashtra v. Ramesh Sharma",
+    "court": "Bombay High Court",
+    "year": "2021",
+    "judge": "Justice Priya Kulkarni",
+    "case_category": "Criminal",
+    "case_number": "Criminal Appeal 445/2020",
+    "issue": "Whether the accused is guilty of cheating and dishonestly inducing delivery of property under IPC Section 420 when he fraudulently obtained investment from multiple victims promising guaranteed returns.",
+    "petitioner_arguments": [
+      "Accused made fraudulent representations knowing them to be false to induce victims to invest.",
+      "Accused collected Rs 2.3 crore from 47 victims promising 24% annual returns with no legitimate business.",
+      "Documentary evidence including WhatsApp messages proves deliberate deception.",
+      "Accused has prior criminal antecedents for similar offences."
+    ],
+    "respondent_arguments": [
+      "Accused genuinely believed in the investment scheme and had no dishonest intention.",
+      "Business failure does not amount to criminal cheating under IPC 420.",
+      "Prosecution witnesses are interested witnesses whose testimony is unreliable.",
+      "No mens rea established beyond reasonable doubt."
+    ],
+    "law_sections": [
+      "IPC Section 420",
+      "IPC Section 415",
+      "IPC Section 34",
+      "Evidence Act Section 65B",
+      "Prevention of Money Laundering Act"
+    ],
+    "precedents": [
+      {"case_name": "Hridaya Ranjan Pd. Verma v. State of Bihar", "citation": "AIR 2000 SC 2341", "relevance": "Distinction between civil breach and criminal cheating"},
+      {"case_name": "Vesa Holdings v. State of Kerala", "citation": "(2015) 8 SCC 293", "relevance": "Dishonest intention at inception required for IPC 420"}
+    ],
+    "court_reasoning": "The Court found that the accused had dishonest intention from the very beginning as evidenced by the complete absence of any legitimate investment infrastructure. The WhatsApp messages clearly showed the accused knew the scheme was fraudulent. The Court distinguished business failure from deliberate cheating, holding this case fell squarely in the latter category.",
+    "final_judgment": "Appeal dismissed. Conviction under IPC 420 upheld. Sentence of 3 years rigorous imprisonment with fine of Rs 50 lakhs confirmed. Accused directed to repay victims from the fine amount.",
+    "summary": "State v. Sharma (2021) involved a classic Ponzi scheme case tried under IPC 420. The Bombay High Court upheld conviction, finding that fraudulent intent existed from the inception of the scheme. The case is significant for its analysis of the mens rea requirement in cheating cases and the use of electronic evidence."
+  }
+]
