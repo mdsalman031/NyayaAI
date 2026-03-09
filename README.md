@@ -182,6 +182,4 @@ Current `requirements.txt` already skips problematic native deps on Python 3.13 
 - Do not paste API keys in code, README, or commits.
 - Rotate key immediately if exposed.
 
-## License
 
-Add your preferred license (MIT/Apache-2.0/etc.) before public release.
